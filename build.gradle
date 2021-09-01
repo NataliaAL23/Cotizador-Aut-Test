@@ -1,0 +1,88 @@
+defaultTasks 'clean','test','aggregate'
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath("net.serenity-bdd:serenity-gradle-plugin:2.2.2")
+    }
+}
+apply plugin: 'java'
+//apply plugin: 'jacoco'
+apply plugin: 'net.serenity-bdd.aggregator'
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+
+ext {
+//    serenityCoreVersion = '2.3.33'
+//    serenityCucumberVersion = '2.3.33'
+    serenityCoreVersion = '2.3.33'
+    serenityCucumberVersion = '2.3.33'
+    junitVersion = '4.13.1'
+    lombokVersion = '1.18.12'
+    assertJVersion = '3.8.0'
+    fakerVersion = '1.0.2'
+    jacksonVersion = '2.12.2'
+    slf4jVersion = '1.6.1"'
+}
+
+dependencies {
+
+    compile "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-cucumber6:${serenityCucumberVersion}",
+            "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay-rest:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
+            "junit:junit:${junitVersion}",
+            "org.assertj:assertj-core:${assertJVersion}",
+            "com.github.javafaker:javafaker:${fakerVersion}",
+            "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+            "org.slf4j:slf4j-simple${slf4jVersion}"
+
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.17'
+    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.13.0-rc1'
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation group: 'org.json', name: 'json', version: '20210307'
+
+}
+
+
+
+//task copyDeps(type: Copy) {
+//    from configurations.runtime
+//    into project.projectDir.path + "/lib"
+//}
+//jacoco {
+//    toolVersion = "0.8.3"
+//    reportsDir = file("$buildDir/customJacocoReportDir")
+//}
+//
+//jacocoTestReport {
+//    reports {
+//        xml.enabled false
+//        csv.enabled false
+//        html.destination file("${buildDir}/jacocoHtml")
+//    }
+//}
+//test {
+//    useJUnit()
+//
+//}
+gradle.startParameter.continueOnFailure = true
